@@ -59,12 +59,13 @@ async function run (){
                       const user = await cursor.toArray();
                       res.send(user);
                     });
+
+
        //create new tickets
        app.post('/tickets', async (req, res) => {
              const ticket = req.body;
              const result = await ticketsCollection.insertOne(ticket);
              res.json(result);
-             console.log(result);
          });
 
          //get all tickets
@@ -73,7 +74,15 @@ async function run (){
                    const ticket = await cursor.toArray();
                    res.send(ticket);
                  });
+       // get orders with specific email
+                           app.get('/tickets', async (req, res) => {
+                                         const email = req.query.email;
+                                         const query = {email: email}
+                                         const cursor = ticketsCollection.find(query);
+                                         const tickets = await cursor.toArray();
 
+                                         res.send(tickets);
+                                         });
 
   }
   finally{
