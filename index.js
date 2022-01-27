@@ -20,6 +20,7 @@ async function run (){
      await client.connect();
      const database = client.db('trackerdb');
      const usersCollection = database.collection('users');
+     const ticketsCollection = database.collection('tickets');
      console.log('database connected');
 
      app.post('/users', async (req, res) => {
@@ -58,7 +59,20 @@ async function run (){
                       const user = await cursor.toArray();
                       res.send(user);
                     });
+       //create new tickets
+       app.post('/tickets', async (req, res) => {
+             const ticket = req.body;
+             const result = await ticketsCollection.insertOne(ticket);
+             res.json(result);
+             console.log(result);
+         });
 
+         //get all tickets
+         app.get('/tickets', async (req, res) => {
+                   const cursor = ticketsCollection.find({});
+                   const ticket = await cursor.toArray();
+                   res.send(ticket);
+                 });
 
 
   }
