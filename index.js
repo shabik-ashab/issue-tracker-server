@@ -74,7 +74,7 @@ async function run (){
                    const ticket = await cursor.toArray();
                    res.send(ticket);
                  });
-       // get orders with specific email
+       // get tickets with specific email
                            app.get('/tickets', async (req, res) => {
                                          const email = req.query.email;
                                          const query = {email: email}
@@ -83,6 +83,13 @@ async function run (){
 
                                          res.send(tickets);
                                          });
+                                         //  delete tickets
+                                         app.delete('/tickets/:id', async(req,res) =>{
+                                             const id = req.params.id;
+                                             const query = {_id: ObjectId(id)};
+                                             const result = await ticketsCollection.deleteOne(query);
+                                             res.json(result)
+                                         })
 
   }
   finally{
