@@ -60,6 +60,16 @@ async function run (){
                       res.send(user);
                     });
 
+                    // get users with specific email
+                                        app.get('/user', async (req, res) => {
+                                                      const email = req.query.email;
+                                                      console.log(email);
+                                                      const query = {email: email}
+                                                      const cursor = usersCollection.find(query);
+                                                      const user = await cursor.toArray();
+
+                                                      res.send(user);
+                                                      });
 
        //create new tickets
        app.post('/tickets', async (req, res) => {
@@ -75,14 +85,14 @@ async function run (){
                    res.send(ticket);
                  });
        // get tickets with specific email
-                           app.get('/tickets', async (req, res) => {
-                                         const email = req.query.email;
-                                         const query = {email: email}
-                                         const cursor = ticketsCollection.find(query);
-                                         const tickets = await cursor.toArray();
+       app.get('/ticket', async (req, res) => {
+  const email = req.query.email;
+  const query = {email: email}
+  const cursor = ticketsCollection.find(query);
+  const tickets = await cursor.toArray();
 
-                                         res.send(tickets);
-                                         });
+  res.send(tickets);
+  });
                                          //  delete tickets
                                          app.delete('/tickets/:id', async(req,res) =>{
                                              const id = req.params.id;
