@@ -63,13 +63,42 @@ async function run (){
                     // get users with specific email
                                         app.get('/user', async (req, res) => {
                                                       const email = req.query.email;
-                                                      console.log(email);
+
                                                       const query = {email: email}
                                                       const cursor = usersCollection.find(query);
                                                       const user = await cursor.toArray();
 
                                                       res.send(user);
                                                       });
+                //
+                // // get users with specific email
+                //           app.get('/user', async (req, res) => {
+                //                       const email = req.query.email;
+                //                       console.log(email);
+                //                       const query = {email: email}
+                //                       const cursor = usersCollection.find(query);
+                //                       const user = await cursor.toArray();
+                //                       res.send(user);
+                //                         });
+
+       //          app.get('/users/:email', async (req, res) => {
+       //     const email = req.params.email;
+       //     const query = { email: email };
+       //     const user = await usersCollection.findOne(query);
+       //     let isManager = false;
+       //     if (user?.role === 'manager') {
+       //         isManager = true;
+       //     }
+       //     res.json({ manager: isManager });
+       // })
+       app.get('/users/:team', async (req, res) => {
+  const team = req.params.email;
+  const query = { team: team };
+  const cursor = await usersCollection.find(query);
+  const user = await cursor.toArray();
+
+  res.send(user);
+})
 
        //create new tickets
        app.post('/tickets', async (req, res) => {
