@@ -122,6 +122,22 @@ async function run (){
 
   res.send(tickets);
   });
+
+  // update ticket
+     app.put('/tickets/:id', async(req,res) =>{
+         const id = req.params.id;
+         const asssignTo = req.body.assign;
+         const filter = {_id: ObjectId(id)};
+         const option = {upsert:true}
+         const updateDoc = {
+           $set: {
+             assign: asssignTo
+           }
+         }
+         const result = await ticketsCollection.updateOne(filter,updateDoc,option)
+         res.json(result)
+     })
+
                                          //  delete tickets
                                          app.delete('/tickets/:id', async(req,res) =>{
                                              const id = req.params.id;
