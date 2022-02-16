@@ -70,16 +70,7 @@ async function run (){
 
                                                       res.send(user);
                                                       });
-                //
-                // // get users with specific email
-                //           app.get('/user', async (req, res) => {
-                //                       const email = req.query.email;
-                //                       console.log(email);
-                //                       const query = {email: email}
-                //                       const cursor = usersCollection.find(query);
-                //                       const user = await cursor.toArray();
-                //                       res.send(user);
-                //                         });
+
 
        //          app.get('/users/:email', async (req, res) => {
        //     const email = req.params.email;
@@ -123,15 +114,19 @@ async function run (){
   res.send(tickets);
   });
 
+
+
   // update ticket
      app.put('/tickets/:id', async(req,res) =>{
          const id = req.params.id;
          const asssignTo = req.body.assign;
+         const progress = req.body.progress;
          const filter = {_id: ObjectId(id)};
          const option = {upsert:true}
          const updateDoc = {
            $set: {
-             assign: asssignTo
+             assign: asssignTo,
+             progress: progress
            }
          }
          const result = await ticketsCollection.updateOne(filter,updateDoc,option)
