@@ -101,16 +101,16 @@ async function run() {
     //     }
     //     res.json({ manager: isManager });
     // })
-    app.get('/users/:team', async (req, res) => {
-      const team = req.params.email;
-      const query = {
-        team: team
-      };
-      const cursor = await usersCollection.find(query);
-      const user = await cursor.toArray();
-
-      res.send(user);
-    })
+    // app.get('/user', async (req, res) => {
+    //   const team = req.params.email;
+    //   const query = {
+    //     team: team
+    //   };
+    //   const cursor = await usersCollection.find(query);
+    //   const user = await cursor.toArray();
+    //
+    //   res.send(user);
+    // })
 
     //create new tickets
     app.post('/tickets', async (req, res) => {
@@ -153,7 +153,7 @@ async function run() {
       const updateDoc = {
         $set: {
           assign: asssignTo,
-          progress: progress
+          progress: progress,
         }
       }
       const result = await ticketsCollection.updateOne(filter, updateDoc, option)
@@ -173,9 +173,16 @@ async function run() {
     })
     //create new comments
     app.post('/comments', async (req, res) => {
-      const ticket = req.body;
-      const result = await commentsCollection.insertOne(ticket);
+      const comment = req.body;
+      const result = await commentsCollection.insertOne(comment);
       res.json(result);
+    });
+
+    //get all comments
+    app.get('/comments', async (req, res) => {
+      const cursor = commentsCollection.find({});
+      const comment = await cursor.toArray();
+      res.send(comment);
     });
 
 
